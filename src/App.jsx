@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
-import { requestGetAllTodoList } from './store/reducers/test';
+import { deleteAllTodoList, requestGetAllTodoList } from './store/reducers/test';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -22,6 +22,11 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
+        <button onClick={() => {
+          dispatch(deleteAllTodoList({
+            userName: 'Khoa đẹp trai'
+          }))
+        }}>Delete All</button>
         <button onClick={() => {
           dispatch(requestGetAllTodoList())
         }}>

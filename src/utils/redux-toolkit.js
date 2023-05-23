@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isQuery: false,
-    response: null,
-    success: false,
+    data: {
+        isQuery: false,
+        response: null,
+        success: false,
+    }
 };
 
 const createReducerSlice = (name, asyncThunk, customReducer) => {
@@ -16,16 +18,25 @@ const createReducerSlice = (name, asyncThunk, customReducer) => {
         extraReducers(builder) {
             if (asyncThunk) {
                 builder.addCase(asyncThunk.pending, (state, _) => {
-                    state.isQuery = true;
+                    state.data = {
+                        ...state.data,
+                        isQuery: true
+                    }
                 });
                 builder.addCase(asyncThunk.fulfilled, (state, response) => {
-                    state.isQuery = false;
-                    state.response = response
+                    state.data = {
+                        ...state.data,
+                        isQuery: false,
+                        response: response.payload.data
+                    }
                 });
                 builder.addCase(asyncThunk.rejected, (state, response) => {
-                    state.isQuery = false;
-                    state.response = response;
-                    state.success = false;
+                    state.data = {
+                        ...state.data,
+                        isQuery: false,
+                        response: response.payload.data,
+                        success: false
+                    }
                 });
             }
         }
